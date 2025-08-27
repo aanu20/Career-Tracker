@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "./styles.css";
+import Dashboard from './Dashboard';
 
 function PlacementTracker() {
   const [formData, setFormData] = useState({
@@ -20,24 +22,28 @@ function PlacementTracker() {
     }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token"); // include JWT token
 
- await fetch('http://localhost:5000/add', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(formData)
-});
+    await fetch('http://localhost:5000/add', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(formData)
+    });
 
-
-  navigate('/topics');  // go to topics list
-};
+    navigate('/dashboard');  // go to topics list
+  };
+ 
 
   return (
-    <div>
+    <div className="placement-container">
       <h1>Placement Preparation Tracker</h1>
       <h2>Add Topic</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="placement-form">
         <label>
           Subject:
           <input
@@ -46,10 +52,9 @@ function PlacementTracker() {
             value={formData.subject}
             onChange={handleChange}
             required
-            style={{ margin: '5px' }}
           />
         </label>
-        <br />
+
         <label>
           Topic:
           <input
@@ -58,48 +63,44 @@ function PlacementTracker() {
             value={formData.topic_name}
             onChange={handleChange}
             required
-            style={{ margin: '5px' }}
           />
         </label>
-        <br />
+
         <label>
           Status:
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            style={{ margin: '5px' }}
           >
             <option value="pending">Pending</option>
             <option value="in-progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
         </label>
-        <br />
+
         <label>
           Difficulty:
           <select
             name="difficulty"
             value={formData.difficulty}
             onChange={handleChange}
-            style={{ margin: '5px' }}
           >
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
         </label>
-        <br />
+
         <label>
           Notes:
           <textarea
             name="notes"
             value={formData.notes}
             onChange={handleChange}
-            style={{ margin: '5px' }}
           />
         </label>
-        <br />
+
         <input type="submit" value="Add Topic" />
       </form>
     </div>
