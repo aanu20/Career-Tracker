@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import { API_URL } from "./config";
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,19 +15,23 @@ function Login() {
       alert("Please fill all fields");
       return;
     }
+
     try {
       const res = await axios.post(`${API_URL}/login`, { username, password });
       localStorage.setItem("token", res.data.token);
       alert("Login successful!");
-      navigate("/dashboard"); // your main page
+      navigate("/dashboard");
     } catch (error) {
-      if (error.response && (error.response.status === 400 ||error.response.status === 401 ||error.response.status === 404)) {
-        const res = await axios.post(`${API_URL}/login`, { username, password });
-        localStorage.setItem("token", res.data.token);
-        alert("Username already exists");
-        navigate("/dashboard");
+      if (error.response) {
+        if (error.response.status === 401) {
+          alert("Invalid credentials. Please try again.");
+        } else if (error.response.status === 404) {
+          alert("Server not found. Please check your API URL.");
+        } else {
+          alert(error.response.data.message || "Login failed. Try again.");
+        }
       } else {
-        alert("Registration failed. Try again.");
+        alert("Network error. Please try again later.");
       }
     }
   };

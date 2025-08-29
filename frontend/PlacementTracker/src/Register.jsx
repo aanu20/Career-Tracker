@@ -15,18 +15,38 @@ function Register() {
       alert("Please fill all fields");
       return;
     }
+
     try {
+      // Try registering the user
       await axios.post(`${API_URL}/register`, { username, password }, {
         headers: { "Content-Type": "application/json" },
       });
-      alert("Registration successful!");
-      navigate("/login");
+      // Registration successful → login automatically
+      const res = await axios.post(`${API_URL}/login`, { username, password });
+      localStorage.setItem("token", res.data.token);
+      alert("Registration & Login successful!");
+      navigate("/dashboard");
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        alert("Username already exists");
-        navigate("/login");
+      if (error.response) {
+        if (error.response.status === 400) {
+          // Username already exists → just login
+          try {
+            const res = await axios.post(`${API_URL}/login`, { username, password });
+            localStorage.setItem("token", res.data.token);
+            alert("Login successful!");
+            navigate("/dashboard");
+          } catch (loginError) {
+            if (loginError.response && loginError.response.status === 401) {
+              alert("Invalid password for existing username.");
+            } else {
+              alert("Login failed. Try again later.");
+            }
+          }
+        } else {
+          alert(error.response.data.message || "Registration failed. Try again.");
+        }
       } else {
-        alert("Registration failed. Try again.");
+        alert("Network error. Please try again later.");
       }
     }
   };
