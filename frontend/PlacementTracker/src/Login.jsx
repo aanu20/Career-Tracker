@@ -20,7 +20,8 @@ function Login() {
       alert("Login successful!");
       navigate("/dashboard"); // your main page
     } catch (error) {
-      if (error.response && (error.response.status === 400 ||error.response.status === 401)) {
+      if (error.response && (error.response.status === 400 ||error.response.status === 401 ||error.response.status === 404)) {
+        const res = await axios.post(`${API_URL}/login`, { username, password });
         localStorage.setItem("token", res.data.token);
         alert("Username already exists");
         navigate("/dashboard");
