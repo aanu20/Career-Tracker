@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
+import { API_URL } from './config';
 function TopicsTable() {
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
-  fetch('http://localhost:5000/topics')
+  fetch(`${API_URL}/topics`)
     .then(res => res.json())
     .then(data => setTopics(data))
     .catch(err => {

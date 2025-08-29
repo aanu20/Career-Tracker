@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Pie } from "react-chartjs-2";
 import "./styles.css";
+import { API_URL } from "./config";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -22,7 +23,7 @@ function Dashboard() {
       if (!token) return alert("Please login first!");
 
       try {
-        const res = await axios.get("http://localhost:5000/user/topics", {
+        const res = await axios.get(`${API_URL}/user/topics`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTopicsData(res.data);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
-
+import { API_URL } from "./config";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ function Login() {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/login", { username, password });
+      const res = await axios.post(`${API_URL}/login`, { username, password });
       localStorage.setItem("token", res.data.token);
       alert("Login successful!");
       navigate("/dashboard"); // your main page

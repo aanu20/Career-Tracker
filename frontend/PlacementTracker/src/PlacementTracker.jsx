@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./styles.css";
 import Dashboard from './Dashboard';
-
+import { API_URL } from './config';
 function PlacementTracker() {
   const [formData, setFormData] = useState({
     subject: '',
@@ -26,7 +26,7 @@ function PlacementTracker() {
     e.preventDefault();
     const token = localStorage.getItem("token"); // include JWT token
 
-    await fetch('http://localhost:5000/add', {
+    await fetch(`${API_URL}/add`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
+import { API_URL } from "./config";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ function Register() {
     }
     try {
           await axios.post(
-      "http://localhost:5000/register",
+      `${API_URL}/register`,
       { username, password },
       { headers: { "Content-Type": "application/json" } }
     );
