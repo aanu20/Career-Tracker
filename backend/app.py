@@ -5,6 +5,7 @@ import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -208,4 +209,4 @@ def get_user_topics(current_user):
 # ---------- MAIN ----------
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=int(os.environ.get("PORT", 5000)))
