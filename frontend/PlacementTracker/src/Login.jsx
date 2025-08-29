@@ -20,7 +20,13 @@ function Login() {
       alert("Login successful!");
       navigate("/dashboard"); // your main page
     } catch (error) {
-      alert("Login failed! Invalid credentials.");
+      if (error.response && error.response.status === 400) {
+        localStorage.setItem("token", res.data.token);
+        alert("Username already exists");
+        navigate("/dashboard");
+      } else {
+        alert("Registration failed. Try again.");
+      }
     }
   };
 
