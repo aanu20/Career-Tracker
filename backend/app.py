@@ -114,6 +114,11 @@ def login():
         return jsonify({"message": "Invalid credentials"}), 401
 
 # ---------- TOPICS CRUD (PROTECTED) ----------
+@app.route("/")
+def home():
+    return "Placement Tracker Backend is running!"
+
+
 @app.route("/add", methods=["POST"])
 @token_required
 def add_topic(current_user):
