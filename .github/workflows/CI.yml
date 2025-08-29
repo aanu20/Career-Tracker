@@ -32,7 +32,7 @@ jobs:
           node-version: 20
       - name: Install frontend dependencies
         run: |
-          cd frontend && npm install
+          cd frontend/PlacementTracker && npm install
       - name: Build frontend
         run: |
-          cd frontend && npm run build
+          cd frontend/PlacementTracker && npm run build
