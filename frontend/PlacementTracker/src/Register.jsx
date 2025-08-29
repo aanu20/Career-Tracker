@@ -16,18 +16,17 @@ function Register() {
       return;
     }
     try {
-          await axios.post(
-      `${API_URL}/register`,
-      { username, password },
-      { headers: { "Content-Type": "application/json" } }
-    );
-
-      
-      alert("Registration successful! Please login.");
+      await axios.post(`${API_URL}/register`, { username, password }, {
+        headers: { "Content-Type": "application/json" },
+      });
+      alert("Registration successful!");
       navigate("/login");
     } catch (error) {
-      alert("Already exists.. Login .");
-      navigate("/login");
+      if (error.response && error.response.status === 400) {
+        alert("Username already exists");
+      } else {
+        alert("Registration failed. Try again.");
+      }
     }
   };
 
