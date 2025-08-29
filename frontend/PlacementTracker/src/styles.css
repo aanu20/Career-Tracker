@@ -261,3 +261,26 @@ body {
   flex-shrink: 0;
 }
 
+.add-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 40%;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-bottom: 20px; /* spacing below the button */
+}
+
+.add-button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.add-button:active {
+  background-color: #1c5980;
+  transform: translateY(0);
+}
+

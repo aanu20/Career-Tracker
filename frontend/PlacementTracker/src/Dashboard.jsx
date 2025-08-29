@@ -8,10 +8,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [topicsData, setTopicsData] = useState(null);
 
   useEffect(() => {
@@ -51,9 +53,16 @@ function Dashboard() {
     ],
   };
 
+  // Inside Dashboard component
+const add = () => {
+  navigate("/add-topic")
+};
+
+
   return (
     <div className="dashboard-container">
       <h2>Welcome to Your Placement Tracker Dashboard</h2>
+      <button className="add-button" onClick={add}>Add Topics</button>
 
       {/* Summary Cards */}
       <div className="summary-cards">

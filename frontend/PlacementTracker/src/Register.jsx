@@ -15,11 +15,18 @@ function Register() {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/register", { username, password });
+          await axios.post(
+      "http://localhost:5000/register",
+      { username, password },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+      
       alert("Registration successful! Please login.");
       navigate("/login");
     } catch (error) {
-      alert("Registration failed! Try again.");
+      alert("Already exists.. Login .");
+      navigate("/login");
     }
   };
 
