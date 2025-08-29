@@ -24,6 +24,7 @@ function Register() {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         alert("Username already exists");
+        navigate("/login");
       } else {
         alert("Registration failed. Try again.");
       }
